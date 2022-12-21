@@ -1,0 +1,37 @@
+.timeline{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+.frameCounter{
+    padding: 5px;
+    font-size: large;
+}
+.timeline button{
+    background-color: #FF4000;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: large;
+}
+input[type=range] {
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 40%;
+    height: 14px;
+    border-radius: 10px;
+    background: transparent;
+  }
+  input[type=range]:focus {
+    outline: none;
+  }
+input[type=range]::-webkit-slider-thumb {
+    height: 20px;
+    width: 40px;
+    border-radius: 12px;
+    background: #FF4000;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -3px;
+  }

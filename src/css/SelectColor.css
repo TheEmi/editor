@@ -1,0 +1,10 @@
+.toolbar button {
+  height: 40px;
+  width: 40px;
+}
+.toolbar {
+  height: 30px;
+}
+.toolbar .selected {
+  border-color: pink;
+}

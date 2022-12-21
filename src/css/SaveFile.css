@@ -1,0 +1,11 @@
+.SaveFile input{
+    font-size: larger;
+}
+.SaveFile{
+    display: grid;
+    gap: 10px;
+}
+.SaveFile button{
+    font-size: larger;
+    border-radius: 10px;
+}

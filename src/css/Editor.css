@@ -1,0 +1,41 @@
+.Editor{
+    /*background-color: black;*/
+    border-radius: 10px;
+    margin: 30px;
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(20, 38px);
+    grid-gap: 6px;
+}
+.EditorLayout{
+    display: flex;
+    justify-content: center;
+}
+.ToolColumn{
+    margin: 30px 0px 30px 30px;
+    width: 15%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto;
+    gap: 20px;
+}
+
+.PlayButton{
+    font-size:xx-large;
+    border-radius: 15px;
+}
+.PlayControls{
+    text-align: center;
+    display: grid;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+.PlayControls p{
+    font-size: larger;
+    margin: 0px;
+}
+.PlayControls input{
+    font-size: large;
+    margin: 0px;
+}
