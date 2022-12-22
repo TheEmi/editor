@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import "../css/Timeline.css";
 
 function Timeline({
+  handleDeleteFrame,
   handlePlayPause,
   matrixStates,
   currentStateIndex,
@@ -19,8 +20,9 @@ function Timeline({
     if (event.key === "d") onNavigateForward();
     if (event.key === "b") onAddBlankState();
     if (event.key === "n") onAddState();
+    if (event.key === "r") handleDeleteFrame();
     if (event.key === " ") handlePlayPause()
-  }, [onNavigateBack,onNavigateForward,handlePlayPause,onAddState,onAddBlankState]);
+  }, [handleDeleteFrame, onNavigateBack,onNavigateForward,handlePlayPause,onAddState,onAddBlankState]);
 
   useEffect(() => {
     // attach the event listener
@@ -68,6 +70,7 @@ function Timeline({
       >{">"}</button>
       <button onClick={onAddState}>+</button>
       <button onClick={onAddBlankState}>Add Blank</button>
+      <button onClick={handleDeleteFrame}>Delete</button>
     </div>
   );
 }

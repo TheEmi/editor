@@ -135,6 +135,13 @@ function Editor() {
     setCurrentStateIndex(currentStateIndex + 1);
   }
 
+  function removeCurrentFrame() {
+    const newMatrixStates = matrixStates.slice();
+    newMatrixStates.splice(currentStateIndex, 1);
+    setMatrixStates(newMatrixStates);
+    setCurrentStateIndex((currentStateIndex) % matrixStates.length);
+  }
+  
   function addBlankFrame() {
     const newMatrixStates = matrixStates.slice(); // make a copy of the matrixStates array
     newMatrixStates.splice(currentStateIndex + 1, 0, {
@@ -193,6 +200,7 @@ function Editor() {
       </div>
       <Timeline
         className="Timeline"
+        handleDeleteFrame={removeCurrentFrame}
         handlePlayPause={handlePlayPause}
         matrixStates={matrixStates}
         currentStateIndex={currentStateIndex}

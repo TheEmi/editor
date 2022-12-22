@@ -1,8 +1,31 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import "../css/SelectMode.css";
 
 function SelectMode(props) {
   const [mode, setMode] = useState("single"); // set the default mode to "single"
+  
+  const changeWithKey = useCallback(
+    (mode) => {
+      setMode(mode);
+      props.onSelect(mode);
+    },
+    [setMode, props]
+  );
+  const handleKeyPress = useCallback((event) => {
+    if (event.key === "c") changeWithKey("column");
+    if (event.key === "v") changeWithKey("row");
+    if (event.key === "s") changeWithKey("single");
+    if (event.key === "x") changeWithKey("diagonalS");
+    if (event.key === "z") changeWithKey("diagonalP");
+  }, [changeWithKey]);
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener("keydown", handleKeyPress);
+    // remove the event listener
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
 
   function handleModeChange(event) {
     setMode(event.target.value);
@@ -52,7 +75,7 @@ function SelectMode(props) {
           checked={mode === "diagonalP"}
           onChange={handleModeChange}
         />
-        Diagonala Principala
+        Diagonala secundara
       </label>
       <br />
       <label>
@@ -63,7 +86,7 @@ function SelectMode(props) {
           checked={mode === "diagonalS"}
           onChange={handleModeChange}
         />
-        Diagonal secundara
+        Diagonal principala
       </label>
     </div>
   );
