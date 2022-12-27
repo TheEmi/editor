@@ -11,6 +11,9 @@ function Editor() {
   const [matrix, setMatrix] = useState(
     new Array(18).fill(null).map(() => new Array(20).fill("#000000"))
   );
+  const [saved, setSaved] = useState(
+    new Array(18).fill(null).map(() => new Array(20).fill("#000000"))
+  );
   const [matrixStates, setMatrixStates] = useState([
     { matrix: JSON.parse(JSON.stringify(matrix)) },
   ]);
@@ -150,6 +153,18 @@ function Editor() {
     setMatrixStates(newMatrixStates);
     setCurrentStateIndex(currentStateIndex + 1);
   }
+  function handleCopyMatrix() {
+    const newMatrix = JSON.parse(JSON.stringify(matrix));
+    setSaved(newMatrix);
+  }
+  function handlePasteMatrix() {
+    const newSaved = JSON.parse(JSON.stringify(saved));
+    const newMatrixStates = matrixStates.slice(); // make a copy of the matrixStates array
+    newMatrixStates[currentStateIndex] = { matrix: newSaved }; // update the matrix state at the current index
+    setMatrixStates(newMatrixStates); // update the matrixStates state variable
+    setMatrix(newSaved);
+  }
+  
   function handleIntervalChange(event){
     setFrameInterval(parseInt(event.target.value));
   }
@@ -209,6 +224,8 @@ function Editor() {
         onAddBlankState={addBlankFrame}
         onAddState={addState}
         setCurrentStateIndex={setCurrentStateIndex}
+        onCopyMatrix={handleCopyMatrix}
+        onPasteMatrix={handlePasteMatrix}
       />
     </div>
   );

@@ -11,6 +11,8 @@ function Timeline({
   onAddBlankState,
   onAddState,
   setCurrentStateIndex,
+  onCopyMatrix,
+  onPasteMatrix
 }) {
   const [selectorPosition, setSelectorPosition] = useState(currentStateIndex);
   const [trackStyle, setTrackStyle] = useState({ background: "#50555C" });
@@ -71,6 +73,8 @@ function Timeline({
       <button onClick={onAddState}>+</button>
       <button onClick={onAddBlankState}>Add Blank</button>
       <button onClick={handleDeleteFrame}>Delete</button>
+      <button onClick={onCopyMatrix}>Copy</button>
+      <button onClick={onPasteMatrix}>Paste</button>
     </div>
   );
 }
