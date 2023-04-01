@@ -13,7 +13,7 @@ function SaveFile({ matrixStates, setMatrixStates }) {
     const matrixStatesJson = JSON.stringify(matrixStates);
 
     // create a blob object with the JSON string as the data
-    const blob = new Blob([matrixStatesJson], { type: 'application/json' });
+    const blob = new Blob(matrixStatesJson, { type: 'application/json' });
 
     // create a URL object that represents the blob
     const url = URL.createObjectURL(blob);
