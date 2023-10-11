@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import "../css/Editor.css";
 import Square from "./Square";
 import SelectColor from "./SelectColor";
-import ColorPicker from "react-color"; // import the color picker component
+import PhotoshopPicker  from "react-color"; // import the color picker component
 import SelectMode from "./SelectMode";
 import Timeline from "./Timeline";
 import SaveFile from "./SaveFile";
 
 function Editor() {
   const [matrix, setMatrix] = useState(
-    new Array(18).fill(null).map(() => new Array(20).fill("#000000"))
+    new Array(19).fill(null).map(() => new Array(19).fill("#000000"))
   );
   const [saved, setSaved] = useState(
-    new Array(18).fill(null).map(() => new Array(20).fill("#000000"))
+    new Array(19).fill(null).map(() => new Array(19).fill("#000000"))
   );
   const [matrixStates, setMatrixStates] = useState([
     { matrix: JSON.parse(JSON.stringify(matrix)) },
@@ -148,7 +148,7 @@ function Editor() {
   function addBlankFrame() {
     const newMatrixStates = matrixStates.slice(); // make a copy of the matrixStates array
     newMatrixStates.splice(currentStateIndex + 1, 0, {
-      matrix: new Array(18).fill(null).map(() => new Array(20).fill("#000000")),
+      matrix: new Array(19).fill(null).map(() => new Array(19).fill("#000000")),
     }); // insert a new blank frame after the current index
     setMatrixStates(newMatrixStates);
     setCurrentStateIndex(currentStateIndex + 1);
@@ -172,10 +172,11 @@ function Editor() {
     <div className="TimelineContainer">
       <div className="EditorLayout">
         <div className="ToolColumn">
-          <ColorPicker // add a color picker component
+          <PhotoshopPicker // add a color picker component
             color={selectedColor}
             onChange={(color) => setSelectedColor(color.hex)}
           />
+          <input type="color" />
           <SelectColor onSelect={setSelectedColor} />
           <SelectMode onSelect={handleModeChange} />
           <SaveFile

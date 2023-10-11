@@ -4,7 +4,7 @@
     margin: 30px;
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(20, 38px);
+    grid-template-columns: repeat(19, 38px);
     grid-gap: 6px;
 }
 .EditorLayout{

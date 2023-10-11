@@ -3,7 +3,7 @@ import "../css/SelectColor.css";
 
 
 function SelectColor({ onSelect }) {
-  const colors = ["#FF0000", "#0000FF", "#008000", "#000000", "#ffffff"];//colors to pick from
+  const colors = ["#FF0000", "#0000FF", "#00FF00", "#000000", "#ffffff"];//colors to pick from
   const [selectedColor, setSelectedColor] = useState(colors[0]);
 
   function handleClick(color) {
