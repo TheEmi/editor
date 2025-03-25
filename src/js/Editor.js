@@ -6,12 +6,22 @@ import PhotoshopPicker  from "react-color"; // import the color picker component
 import SelectMode from "./SelectMode";
 import Timeline from "./Timeline";
 import SaveFile from "./SaveFile";
+import { useStore } from "./Logic";
 
 function Editor() {
   const [matrix, setMatrix] = useState(
     new Array(19).fill(null).map(() => new Array(19).fill("#000000"))
   );
   const [saved, setSaved] = useState(
+    new Array(19).fill(null).map(() => new Array(19).fill("#000000"))
+  );
+  const [previous, setPrevious] = useState(
+    new Array(19).fill(null).map(() => new Array(19).fill("#000000"))
+  );
+  const [penultim, setPenultim] = useState(
+    new Array(19).fill(null).map(() => new Array(19).fill("#000000"))
+  );
+  const [savedMatrix, setSavedMatrix] = useState(
     new Array(19).fill(null).map(() => new Array(19).fill("#000000"))
   );
   const [matrixStates, setMatrixStates] = useState([
@@ -22,11 +32,14 @@ function Editor() {
 
   const [selectedColor, setSelectedColor] = useState("#ff0000"); // add a state variable to track the selected color
   const [isDragging, setIsDragging] = useState(false);
-  const [mode, setMode] = useState("single"); // add a state variable to track the selected mode
+  const [changed, setChanged] = useState(false);
+  const {mode} = useStore();
   const [isPlaying, setIsPlaying] = useState(false);
   const [frameInterval, setFrameInterval] = useState(100);
   function clicked(x, y) {
     const newMatrix = matrix.slice();
+    setPenultim(JSON.parse(JSON.stringify(previous)));
+    setPrevious(JSON.parse(JSON.stringify(matrix)));
 
     if (mode === "single") {
       // update only the square at position (x, y)
@@ -68,7 +81,7 @@ function Editor() {
         j--;
       }
     }
-
+    
     setMatrix(newMatrix);
     saveMatrix();
   }
@@ -89,26 +102,35 @@ function Editor() {
     }
   }, [isPlaying, currentStateIndex, matrixStates.length, frameInterval]);
 
+  function handleUndo(event){
+      setMatrix(JSON.parse(JSON.stringify(previous)))
+      setPrevious(JSON.parse(JSON.stringify(penultim)));
+  }
+
   function drag(x, y) {
     // update the color of the square at position (x, y) in the matrix
     const newMatrix = matrix.slice(); // make a copy of the matrix
     newMatrix[x][y] = selectedColor; // update the color at position (x, y)
+    setChanged(true);
     setMatrix(newMatrix); // update the matrix state variable
     saveMatrix();
   }
   function handleMouseDown(event) {
+    setSavedMatrix(JSON.parse(JSON.stringify(matrix)));
     setIsDragging(true);
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
   }
 
   function handleMouseUp() {
+    if(changed){
+      setPenultim(JSON.parse(JSON.stringify(previous)));
+      setPrevious(JSON.parse(JSON.stringify(savedMatrix)));
+      setChanged(false);
+    }
     setIsDragging(false);
   }
-  function handleModeChange(newMode) {
-    setMode(newMode);
-  }
 
-  function handlePlayPause() {
+  function handlePlayPause(event) {
     setIsPlaying(!isPlaying); // toggle the isPlaying state variable
   }
   function navigateBack() {
@@ -169,7 +191,7 @@ function Editor() {
     setFrameInterval(parseInt(event.target.value));
   }
   return (
-    <div className="TimelineContainer">
+    <div className="TimelineContainer" onMouseUp={handleMouseUp}>
       <div className="EditorLayout">
         <div className="ToolColumn">
           <PhotoshopPicker // add a color picker component
@@ -178,7 +200,7 @@ function Editor() {
           />
           <input type="color" />
           <SelectColor onSelect={setSelectedColor} />
-          <SelectMode onSelect={handleModeChange} />
+          <SelectMode/>
           <SaveFile
             matrixStates={matrixStates}
             setMatrixStates={setMatrixStates}
@@ -194,7 +216,6 @@ function Editor() {
         <div
           className="Editor"
           onMouseDown={handleMouseDown} // add the mouseDown event handler
-          onMouseUp={handleMouseUp} // add the mouseUp event handler
         >
           {matrix.map((line, x) => {
             return line.map((element, y) => {
@@ -227,6 +248,7 @@ function Editor() {
         setCurrentStateIndex={setCurrentStateIndex}
         onCopyMatrix={handleCopyMatrix}
         onPasteMatrix={handlePasteMatrix}
+        handleUndo={handleUndo}
       />
     </div>
   );

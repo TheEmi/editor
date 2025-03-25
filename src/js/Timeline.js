@@ -12,7 +12,8 @@ function Timeline({
   onAddState,
   setCurrentStateIndex,
   onCopyMatrix,
-  onPasteMatrix
+  onPasteMatrix,
+  handleUndo
 }) {
   const [selectorPosition, setSelectorPosition] = useState(currentStateIndex);
   const [trackStyle, setTrackStyle] = useState({ background: "#50555C" });
@@ -23,7 +24,13 @@ function Timeline({
     if (event.key === "b") onAddBlankState();
     if (event.key === "n") onAddState();
     if (event.key === "r") handleDeleteFrame();
-    if (event.key === " ") handlePlayPause()
+    if (event.key === " ") {
+      event.preventDefault()
+      handlePlayPause()
+    }
+    if (event.ctrlKey && event.key === 'z') {
+      handleUndo();
+    }
   }, [handleDeleteFrame, onNavigateBack,onNavigateForward,handlePlayPause,onAddState,onAddBlankState]);
 
   useEffect(() => {

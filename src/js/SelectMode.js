@@ -1,23 +1,22 @@
 import { useState, useCallback, useEffect } from "react";
 import "../css/SelectMode.css";
+import { useStore } from "./Logic";
 
 function SelectMode(props) {
-  const [mode, setMode] = useState("single"); // set the default mode to "single"
+  const {mode, setMode} = useStore();
   
   const changeWithKey = useCallback(
     (mode) => {
       setMode(mode);
-      props.onSelect(mode);
     },
-    [setMode, props]
+    [setMode]
   );
   const handleKeyPress = useCallback((event) => {
     if (event.key === "c") changeWithKey("column");
     if (event.key === "v") changeWithKey("row");
     if (event.key === "s") changeWithKey("single");
-    if (event.key === "x") changeWithKey("diagonalS");
-    if (event.key === "z") changeWithKey("diagonalP");
   }, [changeWithKey]);
+  
   useEffect(() => {
     // attach the event listener
     document.addEventListener("keydown", handleKeyPress);
@@ -29,7 +28,6 @@ function SelectMode(props) {
 
   function handleModeChange(event) {
     setMode(event.target.value);
-    props.onSelect(event.target.value); // call the onSelect prop with the selected mode
   }
 
   return (
