@@ -1,22 +1,26 @@
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import "../css/SelectMode.css";
 import { useStore } from "./Logic";
 
 function SelectMode(props) {
-  const {mode, setMode} = useStore();
-  
+  const mode = useStore((state) => state.mode);
+  const setMode = useStore((state) => state.setMode);
+
   const changeWithKey = useCallback(
     (mode) => {
       setMode(mode);
     },
     [setMode]
   );
-  const handleKeyPress = useCallback((event) => {
-    if (event.key === "c") changeWithKey("column");
-    if (event.key === "v") changeWithKey("row");
-    if (event.key === "s") changeWithKey("single");
-  }, [changeWithKey]);
-  
+  const handleKeyPress = useCallback(
+    (event) => {
+      if (event.key === "c") changeWithKey("column");
+      if (event.key === "v") changeWithKey("row");
+      if (event.key === "s") changeWithKey("single");
+    },
+    [changeWithKey]
+  );
+
   useEffect(() => {
     // attach the event listener
     document.addEventListener("keydown", handleKeyPress);
@@ -31,7 +35,7 @@ function SelectMode(props) {
   }
 
   return (
-    <div className="SelectMode">
+    <div className="select-mode">
       <label>
         <input
           type="radio"
@@ -65,17 +69,7 @@ function SelectMode(props) {
         Row
       </label>
       <br />
-      <label>
-        <input
-          type="radio"
-          name="mode"
-          value="diagonalP"
-          checked={mode === "diagonalP"}
-          onChange={handleModeChange}
-        />
-        Diagonala secundara
-      </label>
-      <br />
+
       <label>
         <input
           type="radio"
@@ -84,7 +78,18 @@ function SelectMode(props) {
           checked={mode === "diagonalS"}
           onChange={handleModeChange}
         />
-        Diagonal principala
+        Principal diagonal
+      </label>
+      <br />
+      <label>
+        <input
+          type="radio"
+          name="mode"
+          value="diagonalP"
+          checked={mode === "diagonalP"}
+          onChange={handleModeChange}
+        />
+        Secondary diagonal
       </label>
     </div>
   );

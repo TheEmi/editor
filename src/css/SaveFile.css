@@ -1,11 +1,9 @@
-.SaveFile input{
-    font-size: larger;
+.save-file input{
+    font-size: medium;
 }
-.SaveFile{
-    display: grid;
+
+.save-file{
+    display: flex;
+    flex-direction: column;
     gap: 10px;
-}
-.SaveFile button{
-    font-size: larger;
-    border-radius: 10px;
 }

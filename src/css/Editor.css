@@ -1,41 +1,57 @@
-.Editor{
+.editor{
     /*background-color: black;*/
     border-radius: 10px;
     margin: 30px;
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(19, 38px);
-    grid-gap: 6px;
+    grid-gap: 2px;
+    aspect-ratio: 1;
 }
-.EditorLayout{
+.editor-layout{
     display: flex;
     justify-content: center;
 }
-.ToolColumn{
+.tool-column{
     margin: 30px 0px 30px 30px;
-    width: 15%;
+    width: 25%;
     display: grid;
     align-items: center;
     grid-template-columns: auto;
     gap: 20px;
 }
 
-.PlayButton{
-    font-size:xx-large;
-    border-radius: 15px;
-}
-.PlayControls{
+.play-controls{
     text-align: center;
     display: grid;
     align-items: center;
     gap: 10px;
-    justify-content: center;
 }
-.PlayControls p{
+.play-controls p{
     font-size: larger;
     margin: 0px;
 }
-.PlayControls input{
+.play-controls input{
     font-size: large;
     margin: 0px;
+}
+.color-picker{
+    margin: auto;
+}
+.colors{
+    display: flex;
+    margin: auto;
+}
+
+.playback-save{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 16px;
+    width: 70%;
+    margin: auto;
+    background-color: #05062d;
+    border-radius: 8px;
 }

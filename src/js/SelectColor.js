@@ -1,23 +1,18 @@
-import { useState } from "react";
 import "../css/SelectColor.css";
+import { useStore } from "./Logic";
 
-function SelectColor({ onSelect }) {
+function SelectColor() {
   const colors = ["#FF0000", "#0000FF", "#00FF00", "#000000", "#ffffff"];//colors to pick from
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
-
-  function handleClick(color) {
-    setSelectedColor(color);
-    onSelect(color);
-  }
-
+  const selectedColor = useStore(state=>state.selectedColor);
+  const setSelectedColor = useStore(state=>state.setSelectedColor);
   return (
     <div className="toolbar">
       {colors.map((color) => (
         <button
           key={color}
           style={{ backgroundColor: color }}
-          onClick={() => handleClick(color)}
-          className={selectedColor === color ? "selected" : ""}
+          onClick={(e)=>setSelectedColor(color)}
+          className={String(selectedColor).toUpperCase() === color ? "selected" : ""}
         ></button>
       ))}
     </div>

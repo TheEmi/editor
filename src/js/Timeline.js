@@ -1,37 +1,39 @@
 import { useEffect, useState, useCallback } from "react";
 import "../css/Timeline.css";
+import { useStore } from "./Logic";
 
-function Timeline({
-  handleDeleteFrame,
-  handlePlayPause,
-  matrixStates,
-  currentStateIndex,
-  onNavigateBack,
-  onNavigateForward,
-  onAddBlankState,
-  onAddState,
-  setCurrentStateIndex,
-  onCopyMatrix,
-  onPasteMatrix,
-  handleUndo
-}) {
+function Timeline() {
+  const {
+    matrixStates,
+    currentStateIndex,
+    handleUndo,
+    handleCopyMatrix,
+    handlePasteMatrix,
+    navigateForward,
+    navigateBack,
+    addBlankFrame,
+    addState,
+    removeCurrentFrame,
+    handlePlayPause,
+    handleSelectorChange,
+  } = useStore();
   const [selectorPosition, setSelectorPosition] = useState(currentStateIndex);
   const [trackStyle, setTrackStyle] = useState({ background: "#50555C" });
 
   const handleKeyPress = useCallback((event) => {
-    if (event.key === "a") onNavigateBack();
-    if (event.key === "d") onNavigateForward();
-    if (event.key === "b") onAddBlankState();
-    if (event.key === "n") onAddState();
-    if (event.key === "r") handleDeleteFrame();
+    if (event.key === "a") navigateBack();
+    if (event.key === "d") navigateForward();
+    if (event.key === "b") addBlankFrame();
+    if (event.key === "n") addState();
+    if (event.key === "r") removeCurrentFrame();
     if (event.key === " ") {
-      event.preventDefault()
-      handlePlayPause()
+      event.preventDefault();
+      handlePlayPause();
     }
-    if (event.ctrlKey && event.key === 'z') {
+    if (event.ctrlKey && event.key === "z") {
       handleUndo();
     }
-  }, [handleDeleteFrame, onNavigateBack,onNavigateForward,handlePlayPause,onAddState,onAddBlankState]);
+  }, [navigateBack, navigateForward, addBlankFrame, addState, removeCurrentFrame, handlePlayPause, handleUndo]);
 
   useEffect(() => {
     // attach the event listener
@@ -46,42 +48,43 @@ function Timeline({
     setSelectorPosition(currentStateIndex);
     setTrackStyle({
       background:
-        `linear-gradient(to right, #50B2C0 ` +
+        `linear-gradient(to right,rgb(182, 182, 182) ` +
         (currentStateIndex * 100) / (matrixStates.length - 1) +
         `%, #201E1F 0%`,
     });
   }, [currentStateIndex, matrixStates.length]);
 
-  function handleSelectorChange(event) {
+  function onSelectorChange(event) {
     setSelectorPosition(parseInt(event.target.value));
-    setCurrentStateIndex(parseInt(event.target.value)); // update the current frame index
+    handleSelectorChange(parseInt(event.target.value)); // update the current frame index
   }
-  
+
   return (
     <div className="timeline">
-      <p className="frameCounter">Current frame: {currentStateIndex}</p>
-      <button
-        onClick={onNavigateBack}
-        disabled={selectorPosition === 0}
-      >{"<"}</button>
+      <p className="frame-counter">Current frame: {currentStateIndex}</p>
+      <button onClick={navigateBack} disabled={selectorPosition === 0}>
+        {"<"}
+      </button>
       <input
-        className="sliderBar"
+        className="slider-bar"
         type="range"
         style={trackStyle}
         min={0}
         max={matrixStates.length - 1}
         value={selectorPosition}
-        onChange={handleSelectorChange}
+        onChange={onSelectorChange}
       />
       <button
-        onClick={onNavigateForward}
+        onClick={navigateForward}
         disabled={selectorPosition === matrixStates.length - 1}
-      >{">"}</button>
-      <button onClick={onAddState}>+</button>
-      <button onClick={onAddBlankState}>Add Blank</button>
-      <button onClick={handleDeleteFrame}>Delete</button>
-      <button onClick={onCopyMatrix}>Copy</button>
-      <button onClick={onPasteMatrix}>Paste</button>
+      >
+        {">"}
+      </button>
+      <button onClick={addState}>+</button>
+      <button onClick={addBlankFrame}>Add Blank</button>
+      <button onClick={removeCurrentFrame}>Delete</button>
+      <button onClick={handleCopyMatrix}>Copy</button>
+      <button onClick={handlePasteMatrix}>Paste</button>
     </div>
   );
 }

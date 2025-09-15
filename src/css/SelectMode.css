@@ -1,4 +1,56 @@
-.SelectMode{
-    font-size: larger;
-    
-}
+.select-mode {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    background-color: #05062d;
+    color: #e0e0e0;
+    padding: 15px;
+    border-radius: 8px;
+    margin: auto;
+  }
+  
+  .select-mode label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+    padding-bottom: 4px;
+  }
+  
+  .select-mode label:hover {
+    background-color: #3c3c3c;
+  }
+  
+  .select-mode input[type="radio"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #666;
+    border-radius: 50%;
+    margin-right: 10px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .select-mode input[type="radio"]:checked {
+    border-color: #4CAF50;
+    background-color: #4CAF50;
+  }
+  
+  .select-mode input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+  }
+  
+  .select-mode input[type="radio"]:focus {
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.4);
+  }

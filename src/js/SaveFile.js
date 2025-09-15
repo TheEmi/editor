@@ -1,12 +1,6 @@
-import { useState } from 'react';
 import "../css/SaveFile.css";
 
-function SaveFile({ matrixStates, setMatrixStates }) {
-  const [fileName, setFileName] = useState('');
-
-  function handleFileNameChange(event) {
-    setFileName(event.target.value);
-  }
+function SaveFile({ matrixStates, loadMatrixStates }) {
 
   function handleSaveClick() {
     // convert the matrixStates array to a JSON string
@@ -16,7 +10,7 @@ function SaveFile({ matrixStates, setMatrixStates }) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = fileName;
+    link.download = 'frames.json';
     document.body.appendChild(link);
     link.click();
 
@@ -32,7 +26,7 @@ function SaveFile({ matrixStates, setMatrixStates }) {
     reader.onload = (event) => {
       // parse the JSON string from the file and set it as the matrixStates
       const matrixStates = JSON.parse(event.target.result);
-      setMatrixStates(matrixStates);
+      loadMatrixStates(matrixStates);
     };
 
     // start reading the file
@@ -40,9 +34,8 @@ function SaveFile({ matrixStates, setMatrixStates }) {
   }
 
   return (
-    <div className='SaveFile'>
-      <input type="text" value={fileName} placeholder="Enter file name" onChange={handleFileNameChange} />
-      <button onClick={handleSaveClick}>Save</button>
+    <div className='save-file'>
+      <button className="button-64" onClick={handleSaveClick}><span class="text">Save</span></button>
       <input type="file" onChange={handleFileChange} />
     </div>
   );

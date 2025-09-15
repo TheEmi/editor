@@ -1,10 +1,17 @@
 .toolbar button {
-  height: 40px;
-  width: 40px;
+  border-radius: 20%;
+  height: 45px;
+  width: 45px;
+  border-width: 5px;
 }
+
 .toolbar {
-  height: 30px;
+  margin: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px; 
 }
+
 .toolbar .selected {
-  border-color: pink;
+  border-color: #00c892;
 }
